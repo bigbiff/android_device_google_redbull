@@ -164,7 +164,7 @@ on init && property:vendor.skip.init=0
     chown system system /sys/devices/platform/soc/soc:google,charger/charge_start_level
 
     # report max frequency to unity tasks.
-    write /proc/sys/kernel/sched_lib_name "libunity.so"
+    write /proc/sys/kernel/sched_lib_name "UnityMain,libunity.so"
     write /proc/sys/kernel/sched_lib_mask_force 255
 
 on late-init
@@ -815,6 +815,9 @@ on property:persist.radio.multisim.config=
 # Since this property is read by the audio server in system service,
 # it should be written by the system init.
 on property:ro.boot.hardware.radio.subtype=1
+    setprop audio.camerasound.force true
+# BUG FIX: b/163674593
+on property:ro.boot.hardware.sku=G5NZ6
     setprop audio.camerasound.force true
 
 on property:persist.sys.device_provisioned=1
