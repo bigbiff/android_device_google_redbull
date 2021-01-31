@@ -15,6 +15,7 @@
 #
 
 include build/make/target/board/BoardConfigMainlineCommon.mk
+include vendor/twrp/soong/makevars.mk
 
 TARGET_BOARD_PLATFORM := lito
 USES_DEVICE_GOOGLE_REDBULL := true
@@ -47,6 +48,7 @@ BOARD_KERNEL_CMDLINE += i2c_qcom_geni.async_probe=1
 BOARD_KERNEL_CMDLINE += st21nfc.async_probe=1
 BOARD_KERNEL_CMDLINE += spmi_pmic_arb.async_probe=1
 BOARD_KERNEL_CMDLINE += ufs_qcom.async_probe=1
+BOARD_KERNEL_CMDLINE += twrpfastboot=1
 
 BOARD_KERNEL_BASE        := 0x00000000
 BOARD_KERNEL_PAGESIZE    := 4096
@@ -54,7 +56,6 @@ BOARD_KERNEL_PAGESIZE    := 4096
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_BOOT_HEADER_VERSION := 3
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
-
 BOARD_DTBOIMG_PARTITION_SIZE := 16777216
 
 TARGET_NO_KERNEL := false
@@ -584,3 +585,27 @@ endif
 
 # Testing related defines
 BOARD_PERFSETUP_SCRIPT := platform_testing/scripts/perf-setup/b5r3-setup.sh
+
+# TWRP
+TW_THEME := portrait_hdpi
+BOARD_SUPPRESS_SECURE_ERASE := true
+TARGET_RECOVERY_QCOM_RTC_FIX := true
+TW_INPUT_BLACKLIST := "hbtp_vm"
+TW_DEFAULT_BRIGHTNESS := "80"
+#TW_INCLUDE_CRYPTO := true
+AB_OTA_UPDATER := true
+TW_EXCLUDE_DEFAULT_USB_INIT := true
+TW_RECOVERY_ADDITIONAL_RELINK_BINARY_FILES += out/target/product/$(PRODUCT_HARDWARE)/system/bin/strace
+TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += out/target/product/$(PRODUCT_HARDWARE)/system/lib64/android.hardware.authsecret@1.0.so
+TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += out/target/product/$(PRODUCT_HARDWARE)/system/lib64/android.hardware.oemlock@1.0.so
+TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += out/target/product/$(PRODUCT_HARDWARE)/vendor/lib/hw/bootctrl.msmnile.so
+TWRP_INCLUDE_LOGCAT := true
+TARGET_USES_LOGD := true
+# MTP will not work until we update it to support ffs
+TW_EXCLUDE_MTP := true
+TW_USE_TOOLBOX := true
+#TARGET_RECOVERY_PIXEL_FORMAT := ABGR_8888
+TW_NO_HAPTICS := true
+TW_INCLUDE_REPACKTOOLS := true
+#TW_EXTRA_LANGUAGES := true
+include vendor/twrp/soong/makevars.mk
