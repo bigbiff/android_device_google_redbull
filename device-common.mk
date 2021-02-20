@@ -80,7 +80,10 @@ PRODUCT_COPY_FILES += \
 
 #TWRP
 PRODUCT_COPY_FILES += \
-    device/google/redfin/init.recovery.usb.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.usb.rc
+    device/google/redfin/init.recovery.usb.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.usb.rc \
+    device/google/redbull/prebuilts/ftm5.ko:$(TARGET_COPY_OUT_RECOVERY)/root/ftm5.ko \
+    device/google/redbull/prebuilts/sec_touch.ko:$(TARGET_COPY_OUT_RECOVERY)/root/sec_touch.ko \
+    device/google/redbull/prebuilts/touchdriver.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/touchdriver.sh
 
 # Enforce privapp-permissions whitelist
 PRODUCT_PROPERTY_OVERRIDES += \
