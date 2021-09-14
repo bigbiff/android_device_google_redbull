@@ -54,6 +54,27 @@ BOARD_KERNEL_BASE        := 0x00000000
 BOARD_KERNEL_PAGESIZE    := 4096
 BOARD_KERNEL_IMAGE_NAME   := Image.lz4
 
+# Kernel
+BOARD_KERNEL_IMAGE_NAME := Image.lz4
+KERNEL_LD := LD=ld.lld
+TARGET_COMPILE_WITH_MSM_KERNEL := true
+TARGET_KERNEL_ADDITIONAL_FLAGS := DTC_EXT=$(shell pwd)/prebuilts/misc/linux-x86/dtc/dtc
+TARGET_KERNEL_ADDITIONAL_FLAGS += LLVM=1
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_CLANG_COMPILE := true
+TARGET_KERNEL_CONFIG := redbull_defconfig
+TARGET_KERNEL_SOURCE := kernel/google/redbull
+TARGET_NEEDS_DTBOIMAGE := true
+NEED_KERNEL_MODULE_RECOVERY := true
+# Use Gnu AS until we can switch to LLVM_IAS=1
+KERNEL_TOOLCHAIN := $(shell pwd)/prebuilts/gas/$(HOST_PREBUILT_TAG)
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-gnu
+
+# Kernel modules
+BOOT_KERNEL_MODULES += \
+     heatmap.ko \
+     touch_offload.ko \
+
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_BOOT_HEADER_VERSION := 3
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
@@ -62,7 +83,7 @@ BOARD_DTBOIMG_PARTITION_SIZE := 16777216
 TARGET_NO_KERNEL := false
 BOARD_USES_RECOVERY_AS_BOOT := true
 BOARD_USES_METADATA_PARTITION := true
-
+#TARGET_PREBUILT_KERNEL := device/google/redfin-kernel/Image.lz4
 AB_OTA_UPDATER := true
 
 AB_OTA_PARTITIONS += \
@@ -128,7 +149,7 @@ BOARD_RAMDISK_USE_LZ4 := true
 # Any modules that do not exist will be silently dropped.  This is required
 # because some kernel configurations may have extra debug or test modules,
 # make sure any required to be loaded during first stage init are listed.
-BOOT_KERNEL_MODULES := \
+#BOOT_KERNEL_MODULES := \
 	msm_ipc_logging.ko \
 	qtee_shm_bridge.ko \
 	qcom_hwspinlock.ko \
@@ -495,11 +516,11 @@ TARGET_BOARD_COMMON_PATH := $(TARGET_BOARD_NAME_DIR)/sm7250
 TARGET_KERNEL_DIR := $(TARGET_BOARD_NAME_DIR:%/=%)-kernel
 
 # DTBO partition definitions
-ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
-    BOARD_PREBUILT_DTBOIMAGE := $(TARGET_KERNEL_DIR)/dtbo.img
-else
-    BOARD_PREBUILT_DTBOIMAGE := $(TARGET_KERNEL_DIR)/vintf/dtbo.img
-endif
+#ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
+#    BOARD_PREBUILT_DTBOIMAGE := $(TARGET_KERNEL_DIR)/dtbo.img
+#else
+#    BOARD_PREBUILT_DTBOIMAGE := $(TARGET_KERNEL_DIR)/vintf/dtbo.img
+#endif
 TARGET_FS_CONFIG_GEN := $(TARGET_BOARD_NAME_DIR)/config.fs
 
 # Kernel modules
@@ -620,3 +641,4 @@ TW_LIBTAR_DEBUG := true
 TW_INCLUDE_RESETPROP := true
 TW_USE_FSCRYPT_POLICY := 2
 TW_CUSTOM_CPU_TEMP_PATH := /sys/devices/virtual/thermal/tz-by-name/cpu-0-0-step/temp
+TW_LOAD_VENDOR_MODULES := "ftm5.ko sec_touch.ko"

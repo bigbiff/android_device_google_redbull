@@ -3,8 +3,8 @@
 fastboot=$(getprop ro.boot.bootreason | cut -d, -F2)
 if [[ $fastboot == "bootloader" || $fastboot == "longkey" || $fastboot == "reboot" ]]
 then
-	insmod /vendor/lib/modules/ftm5.ko
-	insmod /vendor/lib/modules/sec_touch.ko
+	#insmod /vendor/lib/modules/ftm5.ko
+	#insmod /vendor/lib/modules/sec_touch.ko
 fi
 if [[ $fastboot == "recovery" || $fastboot == "reboot,recovery" ]]
 then
