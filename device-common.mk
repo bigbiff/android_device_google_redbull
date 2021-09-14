@@ -81,9 +81,8 @@ PRODUCT_COPY_FILES += \
 #TWRP
 PRODUCT_COPY_FILES += \
     device/google/redfin/init.recovery.usb.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.usb.rc \
-    device/google/redbull/prebuilts/ftm5.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/ftm5.ko \
-    device/google/redbull/prebuilts/sec_touch.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/sec_touch.ko \
-    device/google/redbull/prebuilts/touchdriver.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/touchdriver.sh \
+    device/google/redbull/prebuilts/ftm5.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/ftm5.ko \
+    device/google/redbull/prebuilts/sec_touch.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/sec_touch.ko \
     device/google/redbull/prebuilts/android.hardware.gatekeeper@1.0-service-qti:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/android.hardware.gatekeeper@1.0-service-qti \
     device/google/redbull/prebuilts/android.hardware.keymaster@4.1-service.citadel:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/android.hardware.keymaster@4.1-service.citadel \
     device/google/redbull/prebuilts/citadeld::$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/citadeld \

@@ -63,6 +63,8 @@ TARGET_NO_KERNEL := false
 BOARD_USES_RECOVERY_AS_BOOT := true
 BOARD_USES_METADATA_PARTITION := true
 
+TARGET_PREBUILT_KERNEL := device/google/redfin-kernel/Image.lz4
+
 AB_OTA_UPDATER := true
 
 AB_OTA_PARTITIONS += \
@@ -620,3 +622,4 @@ TW_LIBTAR_DEBUG := true
 TW_INCLUDE_RESETPROP := true
 TW_USE_FSCRYPT_POLICY := 2
 TW_CUSTOM_CPU_TEMP_PATH := /sys/devices/virtual/thermal/tz-by-name/cpu-0-0-step/temp
+TW_LOAD_VENDOR_MODULES := "ftm5.ko sec_touch.ko"
